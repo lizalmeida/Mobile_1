@@ -3,8 +3,12 @@ package com.example.mobile_1
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,22 +41,32 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    Box (modifier = Modifier
-        .size(400.dp)){
+    /*Box (modifier = Modifier
+        .size(400.dp)){ */
+    Column(
+        modifier = Modifier
+            .background(Color.LightGray)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
-            text = "Text1",
+            text = "Hello $name!",
+            color = Color.Green,
+            fontSize = 40.sp,
+            modifier = Modifier
+                .background(Color.Red)
+                .padding(16.dp)
+                .background(Color.Blue)
+            //.align(Alignment.BottomStart)
+        )
+        Text(
+            text = "Text2",
             color = Color.Blue,
             fontSize = 20.sp,
             modifier = Modifier
-                .align(Alignment.BottomStart)
-            )
-        Text(
-             text = "Text2",
-             color = Color.Blue,
-             fontSize = 20.sp,
-             modifier = Modifier
-                .align(Alignment.BottomStart)
-            )
+            //.align(Alignment.BottomStart)
+        )
     }
 }
 
