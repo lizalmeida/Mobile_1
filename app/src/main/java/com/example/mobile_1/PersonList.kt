@@ -1,6 +1,5 @@
 package com.example.mobile_1
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,17 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import java.util.UUID
 
 @Composable
-fun NameList() {
-    var name by remember {
-        mutableStateOf("")
+fun PersonList() {
+    var person by remember {
+        mutableStateOf(Person(UUID.randomUUID(),"", 0))
     }
-    var names by remember {
-        mutableStateOf(listOf<String>())
+    var persons by remember {
+        mutableStateOf(listOf<Person>())
     }
 
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,42 +48,49 @@ fun NameList() {
                 .padding(16.dp)
         ){
             TextField(
-                value = name,
+                value = person.name,
                 placeholder = {Text("Enter name")},
                 onValueChange = { text ->
-                    name= text
+                    person.name = text
                 }
             )
             Spacer(modifier = Modifier
                 .weight(1f))
+        }
 
-            Button(modifier = Modifier
-                .padding(end = 16.dp),
-                onClick = {
-                    if (name.isNotBlank()){
-                        names = names + name
-                    } else {
-                        Toast
-                            .makeText(
-                                context,
-                                "Enter a valid name",
-                                Toast.LENGTH_SHORT
-                            )
-                            .show()
-                    }
-                    name = ""
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ){
+            TextField(
+                value = person.age,
+                placeholder = {Text("Enter age")},
+                onValueChange = { text ->
+                    person.age = text
                 }
             )
-            {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Icono de añadir"
-                )
+            Spacer(modifier = Modifier
+                .weight(1f))
+        }
+
+        Button(modifier = Modifier
+            .padding(end = 16.dp),
+            onClick = {
+                persons = persons + person
+                person = Person(UUID.randomUUID(), "", 0)
             }
+        )
+        {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Icono de añadir"
+            )
         }
         LazyColumn{
-            items(names){currentName ->
-                Text(text = currentName,
+            items(persons){currentPersona ->
+                Text(text = "${currentPersona.name}, ${currentPersona.age}",
                 modifier = Modifier
                     .padding(16.dp)
                 )
@@ -95,6 +101,6 @@ fun NameList() {
 }
 @Preview(showBackground = true)
 @Composable
-fun ListPreview() {
-    NameList()
+fun PersonListPreview() {
+    PersonList()
 }
